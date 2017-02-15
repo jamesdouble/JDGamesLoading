@@ -15,20 +15,83 @@ struct JDSnackGameConfiguration {
     var Snack_Speed:CGFloat = 10.0
 }
 
+struct SnackBasicSetting {
+    static let SnackHeadCategoryName = "SnackHead"
+    static let SnackBodyCategoryName = "SnackBody"
+    static let FoodCategoryName = "Food"
+  
+    static let SnackHeadCategory   : UInt32 = 0x1 << 0
+    static let SnackBodyCategory : UInt32 = 0x1 << 1
+    static let FoodCategory  : UInt32 = 0x1 << 2
+    static var SnackPixelColor:UIColor = UIColor.green
+}
+
+struct TurnRoundPoint {
+    var turnRoundPosition:CGPoint = CGPoint.zero
+    var turnRoundDirection:CGVector = CGVector.zero
+    var PassCounter:Int = 0
+}
+
+class SnackShapeNode:SKShapeNode
+{
+    var PixelSize:CGSize = CGSize.zero
+    var InstanceDirection:CGVector = CGVector.zero
+    init(size:CGSize) {
+        super.init()
+        let rect = CGRect(origin: CGPoint.zero, size: size)
+        self.path = CGPath(rect: rect, transform: nil)
+        PixelSize = size
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class SnackHeadNode:SnackShapeNode
+{
+    
+    override init(size:CGSize) {
+        super.init(size:size)
+        self.fillColor = SnackBasicSetting.SnackPixelColor
+        self.name = SnackBasicSetting.SnackHeadCategoryName
+        self.physicsBody = SKPhysicsBody(rectangleOf: PixelSize)
+        self.physicsBody!.categoryBitMask = SnackBasicSetting.SnackHeadCategory
+        self.physicsBody!.contactTestBitMask = SnackBasicSetting.FoodCategory
+        self.physicsBody!.isDynamic = true
+        self.physicsBody!.collisionBitMask = 0
+        self.zPosition = 2
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class SnackBodyNode:SnackShapeNode
+{
+    override init(size:CGSize) {
+        super.init(size:size)
+        self.position = CGPoint.zero
+        self.fillColor = SnackBasicSetting.SnackPixelColor
+        self.name = SnackBasicSetting.SnackBodyCategoryName
+        self.physicsBody = SKPhysicsBody(rectangleOf: PixelSize)
+        self.physicsBody!.categoryBitMask = SnackBasicSetting.SnackBodyCategory
+        self.physicsBody!.isDynamic = false
+        self.physicsBody!.collisionBitMask = 0
+        self.zPosition = 2
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 
 class JDSnackScene: SKScene{
     
-    let SnackHeadCategoryName = "SnackHead"
-    let SnackBodyCategoryName = "SnackBody"
-    let FoodCategoryName = "Food"
-    
-    let SnackHeadCategory   : UInt32 = 0x1 << 0
-    let SnackBodyCategory : UInt32 = 0x1 << 1
-    let FoodCategory  : UInt32 = 0x1 << 2
-    
     var isFingerOnPaddle = false
-    var ball:SKShapeNode!
     var gameWon : Bool = false {
         didSet {
             if(gameWon)
@@ -62,47 +125,69 @@ class JDSnackScene: SKScene{
     /*
      Pixel Color
     */
-    var SnackPixelColor:UIColor = UIColor.green
     var FoodPixelColor:UIColor = UIColor.white
     
     /*
      Snack
     */
     var SnackPixelArray:[SKShapeNode] = [SKShapeNode]()
-    var SncakSpeed:CGFloat = 100
+    var SncakSpeed:CGFloat = 40
     var HeadPixel:SKShapeNode!
     /*
      Direction
     */
     var NowDirection:CGVector = CGVector(dx: 0.0, dy: 1.0)
     var LastTimeInterval:TimeInterval?
+    var turnroundArr:[TurnRoundPoint] = [TurnRoundPoint]()
+    
+    
     
     override func update(_ currentTime: TimeInterval) {
-        //RecOld
-        var OldPosition:[CGPoint] = [CGPoint]()
-        for pixel in SnackPixelArray
-        {
-            OldPosition.append(pixel.position)
-        }
         //Speed
         if(LastTimeInterval == nil) {LastTimeInterval = currentTime
             return}
-        let InstanceSpeed:CGFloat = self.SncakSpeed * CGFloat(currentTime - LastTimeInterval!)
+        let InstanceScale:CGFloat =  CGFloat(currentTime - LastTimeInterval!)
+        let InstanceSpeed:CGFloat = self.SncakSpeed * InstanceScale
         LastTimeInterval = currentTime
         let Vecter:CGVector = CGVector(dx: InstanceSpeed * NowDirection.dx, dy: InstanceSpeed * NowDirection.dy)
         //Update All Snack
-        var LastPixelPosition:CGPoint?
-        for pixel in SnackPixelArray
-        {
-            if let lastPostion = LastPixelPosition
+        
+        var LastPixelPoint:CGPoint?
+        self.enumerateChildNodes(withName: SnackBasicSetting.SnackHeadCategoryName) {
+            node, stop in
+            if let snackHead:SnackHeadNode = node as? SnackHeadNode
             {
-                pixel.position = lastPostion
+                LastPixelPoint = node.position
+                let newPostition = CGPoint(x: (node.position.x) + (Vecter.dx), y: (node.position.y) + (Vecter.dy))
+                snackHead.position = self.TouchTheWallDetect(input: newPostition)
             }
-            else //FirstPixel
+        }
+        //
+        var LastDirection:CGVector = NowDirection
+        self.enumerateChildNodes(withName: SnackBasicSetting.SnackBodyCategoryName) {
+            node, stop in
+            if let NewPosition = LastPixelPoint,let snackBody:SnackBodyNode = node as? SnackBodyNode
             {
-                LastPixelPosition = pixel.position
-                let newPostition = CGPoint(x: (LastPixelPosition?.x)! + (Vecter.dx), y: (LastPixelPosition?.y)! + (Vecter.dy))
-                pixel.position = TouchTheWallDetect(input: newPostition)
+                if(snackBody.InstanceDirection == CGVector.zero) //NewPixel
+                {
+                   snackBody.position.x = NewPosition.x - LastDirection.dx * self.PixelSize.width
+                   snackBody.position.y = NewPosition.y - LastDirection.dy * self.PixelSize.width
+                   snackBody.InstanceDirection = LastDirection
+                }
+                else{
+                    snackBody.position.x += snackBody.InstanceDirection.dx * InstanceSpeed
+                    snackBody.position.y += snackBody.InstanceDirection.dy * InstanceSpeed
+                    
+                    for turnRound in self.turnroundArr
+                    {
+                        if( ( abs(snackBody.position.x - turnRound.turnRoundPosition.x) < 0.01 ) && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.01 )
+                        {
+                            snackBody.InstanceDirection = turnRound.turnRoundDirection
+                        }
+                    }
+                }
+                LastDirection = snackBody.InstanceDirection
+                LastPixelPoint = snackBody.position
             }
         }
     }
@@ -115,7 +200,7 @@ class JDSnackScene: SKScene{
     
     init(size: CGSize,configuration:JDSnackGameConfiguration) {
         super.init(size: size)
-        SnackPixelColor = configuration.Snack_color
+        SnackBasicSetting.SnackPixelColor = configuration.Snack_color
         FoodPixelColor = configuration.Food_color
         SncakSpeed = configuration.Snack_Speed
         self.backgroundColor = UIColor.clear
@@ -160,18 +245,9 @@ class JDSnackScene: SKScene{
     
     func initSnack()
     {
-        HeadPixel = SKShapeNode(rectOf: PixelSize)
+        HeadPixel = SnackHeadNode(size: PixelSize)
         HeadPixel.position = CGPoint(x: self.frame.width * 0.5 , y: self.frame.width * 0.5)
-        HeadPixel.fillColor = SnackPixelColor
-        HeadPixel.name = SnackHeadCategoryName
-        HeadPixel.physicsBody = SKPhysicsBody(rectangleOf: PixelSize)
-        HeadPixel.physicsBody!.categoryBitMask = SnackHeadCategory
-        HeadPixel.physicsBody!.contactTestBitMask = FoodCategory
-        HeadPixel.physicsBody!.isDynamic = true
-        HeadPixel.physicsBody!.collisionBitMask = 0
-       
-        HeadPixel.zPosition = 2
-        self.addChild(HeadPixel)
+               self.addChild(HeadPixel)
         SnackPixelArray.append(HeadPixel)
     }
     
@@ -181,11 +257,11 @@ class JDSnackScene: SKScene{
         let randomY:CGFloat = randomFloat(from: 0, to: self.frame.height)
         let Food:SKShapeNode = SKShapeNode(rectOf: PixelSize)
         Food.position = CGPoint(x: randomX, y: randomY)
-        Food.name = FoodCategoryName
+        Food.name = SnackBasicSetting.FoodCategoryName
         Food.fillColor = FoodPixelColor
         Food.physicsBody = SKPhysicsBody(rectangleOf: PixelSize)
-        Food.physicsBody!.categoryBitMask = FoodCategory
-        Food.physicsBody!.contactTestBitMask = SnackHeadCategory
+        Food.physicsBody!.categoryBitMask = SnackBasicSetting.FoodCategory
+        Food.physicsBody!.contactTestBitMask = SnackBasicSetting.SnackHeadCategory
         Food.physicsBody!.isDynamic = false
         Food.physicsBody!.collisionBitMask = 0
         Food.zPosition = 2
@@ -237,18 +313,26 @@ extension JDSnackScene
 {
     func swipedRight(sender:UISwipeGestureRecognizer){
         self.NowDirection = CGVector(dx: 1.0, dy: 0.0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
          self.NowDirection = CGVector(dx: -1.0, dy: 0.0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
         self.NowDirection = CGVector(dx: 0.0, dy: 1.0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
          self.NowDirection = CGVector(dx: 0.0, dy: -1.0)
+         let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+         turnroundArr.append(NewTureRoundPoint)
     }
     
 }
@@ -274,20 +358,12 @@ extension JDSnackScene:SKPhysicsContactDelegate
             secondBody = contact.bodyA
         }
         
-        if firstBody.categoryBitMask == SnackHeadCategory && secondBody.categoryBitMask == FoodCategory {
+        if firstBody.categoryBitMask == SnackBasicSetting.SnackHeadCategory && secondBody.categoryBitMask == SnackBasicSetting.FoodCategory {
             if let food = secondBody.node
             {
                 food.removeFromParent()
                 AddrandomFood()
-                let newHeadPixel = SKShapeNode(rectOf: PixelSize)
-                newHeadPixel.position = CGPoint.zero
-                newHeadPixel.fillColor = SnackPixelColor
-                newHeadPixel.name = SnackBodyCategoryName
-                newHeadPixel.physicsBody = SKPhysicsBody(rectangleOf: PixelSize)
-                newHeadPixel.physicsBody!.categoryBitMask = SnackBodyCategory
-                newHeadPixel.physicsBody!.isDynamic = false
-                newHeadPixel.physicsBody!.collisionBitMask = 0
-                newHeadPixel.zPosition = 2
+                let newHeadPixel = SnackBodyNode(size: PixelSize)
                 self.addChild(newHeadPixel)
                 SnackPixelArray.append(HeadPixel)
             }
