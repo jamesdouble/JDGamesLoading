@@ -14,6 +14,9 @@
 		4F5C26F61E520BC400618FA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C26F41E520BC400618FA7 /* LaunchScreen.storyboard */; };
 		4F5C27011E520BC400618FA7 /* JDGamesLoadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C27001E520BC400618FA7 /* JDGamesLoadingTests.swift */; };
 		4F5C270C1E520BC400618FA7 /* JDGamesLoadingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C270B1E520BC400618FA7 /* JDGamesLoadingUITests.swift */; };
+		4F5C271D1E520C9B00618FA7 /* JDBreaksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */; };
+		4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */; };
+		4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		4F5C27071E520BC400618FA7 /* JDGamesLoadingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JDGamesLoadingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C270B1E520BC400618FA7 /* JDGamesLoadingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JDGamesLoadingUITests.swift; sourceTree = "<group>"; };
 		4F5C270D1E520BC400618FA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDBreaksScene.swift; sourceTree = "<group>"; };
+		4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGamesLoading.swift; sourceTree = "<group>"; };
+		4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDSnackScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,7 @@
 		4F5C26EA1E520BC400618FA7 /* JDGamesLoading */ = {
 			isa = PBXGroup;
 			children = (
+				4F5C27191E520C8300618FA7 /* JDGamesLoading */,
 				4F5C26EB1E520BC400618FA7 /* AppDelegate.swift */,
 				4F5C26ED1E520BC400618FA7 /* ViewController.swift */,
 				4F5C26EF1E520BC400618FA7 /* Main.storyboard */,
@@ -123,6 +130,32 @@
 				4F5C270D1E520BC400618FA7 /* Info.plist */,
 			);
 			path = JDGamesLoadingUITests;
+			sourceTree = "<group>";
+		};
+		4F5C27191E520C8300618FA7 /* JDGamesLoading */ = {
+			isa = PBXGroup;
+			children = (
+				4FF1D9581E52ADBB00EBA98E /* SnackGame */,
+				4F5C271A1E520C8F00618FA7 /* BreaksGame */,
+				4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */,
+			);
+			name = JDGamesLoading;
+			sourceTree = "<group>";
+		};
+		4F5C271A1E520C8F00618FA7 /* BreaksGame */ = {
+			isa = PBXGroup;
+			children = (
+				4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */,
+			);
+			name = BreaksGame;
+			sourceTree = "<group>";
+		};
+		4FF1D9581E52ADBB00EBA98E /* SnackGame */ = {
+			isa = PBXGroup;
+			children = (
+				4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */,
+			);
+			name = SnackGame;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +293,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */,
+				4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */,
+				4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */,
+				4F5C271D1E520C9B00618FA7 /* JDBreaksScene.swift in Sources */,
 				4F5C26EC1E520BC400618FA7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +539,7 @@
 				4F5C27121E520BC400618FA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F5C27131E520BC400618FA7 /* Build configuration list for PBXNativeTarget "JDGamesLoadingTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +548,7 @@
 				4F5C27151E520BC400618FA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F5C27161E520BC400618FA7 /* Build configuration list for PBXNativeTarget "JDGamesLoadingUITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +557,7 @@
 				4F5C27181E520BC400618FA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
