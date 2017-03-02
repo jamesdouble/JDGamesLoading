@@ -29,7 +29,7 @@ struct SnackBasicSetting {
 struct TurnRoundPoint {
     var turnRoundPosition:CGPoint = CGPoint.zero
     var turnRoundDirection:CGVector = CGVector.zero
-    var PassCounter:Int = 0
+    var PassBodyID:[Int] = []
 }
 
 class SnackShapeNode:SKShapeNode
@@ -71,6 +71,7 @@ class SnackHeadNode:SnackShapeNode
 
 class SnackBodyNode:SnackShapeNode
 {
+    var BodyID:Int = 0
     override init(size:CGSize) {
         super.init(size:size)
         self.position = CGPoint.zero
@@ -91,16 +92,6 @@ class SnackBodyNode:SnackShapeNode
 
 class JDSnackScene: SKScene{
     
-    var isFingerOnPaddle = false
-    var gameWon : Bool = false {
-        didSet {
-            if(gameWon)
-            {
-                
-            }
-            
-        }
-    }
     /*
      Window Size
     */
@@ -130,7 +121,7 @@ class JDSnackScene: SKScene{
     /*
      Snack
     */
-    var SnackPixelArray:[SKShapeNode] = [SKShapeNode]()
+    var SnackBodyNodeCount:Int = 0
     var SncakSpeed:CGFloat = 40
     var HeadPixel:SKShapeNode!
     /*
@@ -144,14 +135,16 @@ class JDSnackScene: SKScene{
     
     override func update(_ currentTime: TimeInterval) {
         //Speed
-        if(LastTimeInterval == nil) {LastTimeInterval = currentTime
-            return}
+        if(LastTimeInterval == nil)
+        {
+            LastTimeInterval = currentTime
+            return
+        }
         let InstanceScale:CGFloat =  CGFloat(currentTime - LastTimeInterval!)
         let InstanceSpeed:CGFloat = self.SncakSpeed * InstanceScale
-        LastTimeInterval = currentTime
         let Vecter:CGVector = CGVector(dx: InstanceSpeed * NowDirection.dx, dy: InstanceSpeed * NowDirection.dy)
         //Update All Snack
-        
+        //SnackHead
         var LastPixelPoint:CGPoint?
         self.enumerateChildNodes(withName: SnackBasicSetting.SnackHeadCategoryName) {
             node, stop in
@@ -162,9 +155,10 @@ class JDSnackScene: SKScene{
                 snackHead.position = self.TouchTheWallDetect(input: newPostition)
             }
         }
-        //
+        //SnackBody
         var LastDirection:CGVector = NowDirection
-        self.enumerateChildNodes(withName: SnackBasicSetting.SnackBodyCategoryName) {
+        self.enumerateChildNodes(withName: SnackBasicSetting.SnackBodyCategoryName)
+        {
             node, stop in
             if let NewPosition = LastPixelPoint,let snackBody:SnackBodyNode = node as? SnackBodyNode
             {
@@ -174,22 +168,85 @@ class JDSnackScene: SKScene{
                    snackBody.position.y = NewPosition.y - LastDirection.dy * self.PixelSize.width
                    snackBody.InstanceDirection = LastDirection
                 }
-                else{
-                    snackBody.position.x += snackBody.InstanceDirection.dx * InstanceSpeed
-                    snackBody.position.y += snackBody.InstanceDirection.dy * InstanceSpeed
-                    
+                else if(self.turnroundArr.count == 0) //直線前進
+                {
+                    let newPostition = CGPoint(x: snackBody.position.x + snackBody.InstanceDirection.dx * InstanceSpeed, y: snackBody.position.y + snackBody.InstanceDirection.dy * InstanceSpeed)
+                    snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                }
+                else //TurnRound
+                {
+                    let NewX =  snackBody.position.x + snackBody.InstanceDirection.dx * InstanceSpeed
+                    let NewY =  snackBody.position.y + snackBody.InstanceDirection.dy * InstanceSpeed
+                    var index:Int = 0
                     for turnRound in self.turnroundArr
                     {
-                        if( ( abs(snackBody.position.x - turnRound.turnRoundPosition.x) < 0.01 ) && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.01 )
+                        if(turnRound.PassBodyID.contains(snackBody.BodyID)) //已走過
                         {
-                            snackBody.InstanceDirection = turnRound.turnRoundDirection
+                            let newPostition = CGPoint(x: NewX, y: NewY)
+                            snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                            break
                         }
+                        //
+                        if(abs(snackBody.InstanceDirection.dx) == 1 && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.01) //橫向超越
+                        {
+                            let PostiveOrNegative:Bool = (snackBody.InstanceDirection.dx > 0)
+                            let ChekingExceed:Bool = PostiveOrNegative ? (NewX > turnRound.turnRoundPosition.x) : (NewX < turnRound.turnRoundPosition.x)
+                            if(!ChekingExceed)
+                            {
+                                let newPostition = CGPoint(x: NewX, y: NewY)
+                                snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                                break
+                            }
+                            //確定要轉彎
+                            self.turnroundArr[index].PassBodyID.append(snackBody.BodyID)
+                            let ExceedLength:CGFloat = PostiveOrNegative ? (NewX - turnRound.turnRoundPosition.x) : (turnRound.turnRoundPosition.x - NewX)
+                            let NewX =  turnRound.turnRoundPosition.x
+                            let NewY =  snackBody.position.y + turnRound.turnRoundDirection.dy * ExceedLength
+                            let newPostition = CGPoint(x: NewX, y: NewY)
+                            snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                            snackBody.InstanceDirection = turnRound.turnRoundDirection
+                            break
+                        }
+                        else if(abs(snackBody.InstanceDirection.dy) == 1 && abs(snackBody.position.x - turnRound.turnRoundPosition.x) < 0.01) //垂直
+                        {
+                            let PostiveOrNegative:Bool = (snackBody.InstanceDirection.dy > 0)
+                            let ChekingExceed:Bool = PostiveOrNegative ? (NewY > turnRound.turnRoundPosition.y) : (NewY  < turnRound.turnRoundPosition.y)
+                            if(!ChekingExceed)
+                            {
+                                let newPostition = CGPoint(x: NewX, y: NewY)
+                                snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                                break
+                            }
+                            self.turnroundArr[index].PassBodyID.append(snackBody.BodyID)
+                            let ExceedLength:CGFloat = PostiveOrNegative ? (NewY - turnRound.turnRoundPosition.y) : (turnRound.turnRoundPosition.y - NewY)
+                            let NewX =  snackBody.position.x + turnRound.turnRoundDirection.dx * ExceedLength
+                            let NewY =  turnRound.turnRoundPosition.y
+                            let newPostition = CGPoint(x: NewX, y: NewY)
+                            snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                            snackBody.InstanceDirection = turnRound.turnRoundDirection
+                            break
+                        }
+                        index += 1
                     }
+                   
                 }
                 LastDirection = snackBody.InstanceDirection
                 LastPixelPoint = snackBody.position
             }
+            
         }
+        //
+        var Index:Int = 0
+        for turnRound in self.turnroundArr
+        {
+            if(turnRound.PassBodyID.count == self.SnackBodyNodeCount)
+            {
+                self.turnroundArr.remove(at: Index)
+                continue
+            }
+            Index += 1
+        }
+        LastTimeInterval = currentTime
     }
     
     override init(size: CGSize) {
@@ -248,7 +305,6 @@ class JDSnackScene: SKScene{
         HeadPixel = SnackHeadNode(size: PixelSize)
         HeadPixel.position = CGPoint(x: self.frame.width * 0.5 , y: self.frame.width * 0.5)
                self.addChild(HeadPixel)
-        SnackPixelArray.append(HeadPixel)
     }
     
     func AddrandomFood()
@@ -302,7 +358,7 @@ class JDSnackScene: SKScene{
      */
     
     func isGameWon() -> Bool {
-        var numberOfBricks = 0
+        let numberOfBricks = 0
         
         return numberOfBricks == 0
     }
@@ -313,25 +369,25 @@ extension JDSnackScene
 {
     func swipedRight(sender:UISwipeGestureRecognizer){
         self.NowDirection = CGVector(dx: 1.0, dy: 0.0)
-        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassBodyID: [])
         turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
          self.NowDirection = CGVector(dx: -1.0, dy: 0.0)
-        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassBodyID: [])
         turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
         self.NowDirection = CGVector(dx: 0.0, dy: 1.0)
-        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+        let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassBodyID: [])
         turnroundArr.append(NewTureRoundPoint)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
          self.NowDirection = CGVector(dx: 0.0, dy: -1.0)
-         let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassCounter: 0)
+         let NewTureRoundPoint:TurnRoundPoint = TurnRoundPoint.init(turnRoundPosition: HeadPixel.position, turnRoundDirection: NowDirection, PassBodyID: [])
          turnroundArr.append(NewTureRoundPoint)
     }
     
@@ -363,14 +419,12 @@ extension JDSnackScene:SKPhysicsContactDelegate
             {
                 food.removeFromParent()
                 AddrandomFood()
-                let newHeadPixel = SnackBodyNode(size: PixelSize)
-                self.addChild(newHeadPixel)
-                SnackPixelArray.append(HeadPixel)
+                let newBodyPixel = SnackBodyNode(size: PixelSize)
+                self.addChild(newBodyPixel)
+                newBodyPixel.BodyID = SnackBodyNodeCount
+                SnackBodyNodeCount += 1
             }
-            
         }
-
-        
     }
     
     
