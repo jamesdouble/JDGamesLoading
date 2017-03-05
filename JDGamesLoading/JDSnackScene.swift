@@ -19,7 +19,6 @@ struct SnackBasicSetting {
     static let SnackHeadCategoryName = "SnackHead"
     static let SnackBodyCategoryName = "SnackBody"
     static let FoodCategoryName = "Food"
-  
     static let SnackHeadCategory   : UInt32 = 0x1 << 0
     static let SnackBodyCategory : UInt32 = 0x1 << 1
     static let FoodCategory  : UInt32 = 0x1 << 2
@@ -42,7 +41,6 @@ class SnackShapeNode:SKShapeNode
         self.path = CGPath(rect: rect, transform: nil)
         PixelSize = size
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -184,7 +182,7 @@ class JDSnackScene: SKScene{
                         {
                             let newPostition = CGPoint(x: NewX, y: NewY)
                             snackBody.position = self.TouchTheWallDetect(input: newPostition)
-                            break
+                            continue
                         }
                         //
                         if(abs(snackBody.InstanceDirection.dx) == 1 && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.01) //橫向超越
@@ -330,20 +328,24 @@ class JDSnackScene: SKScene{
         var result = input
         if(input.x > self.frame.width)
         {
-            result.x = 0
+            let exceedLength:CGFloat = input.x - self.frame.width
+            result.x = exceedLength
         }
         else if(input.x < 0)
         {
-            result.x = self.frame.width - 1
+            let exceedLength:CGFloat = 0 - input.x
+            result.x = self.frame.width - exceedLength
         }
         
         if(input.y > self.frame.height)
         {
-            result.y = 0
+            let exceedLength:CGFloat = input.y - self.frame.height
+            result.y = exceedLength
         }
         else if(input.y < 0)
         {
-            result.y = self.frame.height
+            let exceedLength:CGFloat = 0 - input.y
+            result.y = self.frame.height - exceedLength
         }
         return result
     }
@@ -352,17 +354,6 @@ class JDSnackScene: SKScene{
         let rand: CGFloat = CGFloat(Float(arc4random()) / 0xFFFFFFFF)
         return (rand) * (to - from) + from
     }
-    
-    /*
-     This method checks to see how many bricks are left in the scene by going through all the scene’s children. For each child, it checks whether the child name is equal to BlockCategoryName. If there are no bricks left, the player has won the game and the method returns true.
-     */
-    
-    func isGameWon() -> Bool {
-        let numberOfBricks = 0
-        
-        return numberOfBricks == 0
-    }
-    
 }
 
 extension JDSnackScene
