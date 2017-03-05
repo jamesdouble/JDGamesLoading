@@ -120,7 +120,7 @@ class JDSnackScene: SKScene{
      Snack
     */
     var SnackBodyNodeCount:Int = 0
-    var SncakSpeed:CGFloat = 40
+    var SncakSpeed:CGFloat = 50
     var HeadPixel:SKShapeNode!
     /*
      Direction
@@ -166,26 +166,25 @@ class JDSnackScene: SKScene{
                    snackBody.position.y = NewPosition.y - LastDirection.dy * self.PixelSize.width
                    snackBody.InstanceDirection = LastDirection
                 }
-                else if(self.turnroundArr.count == 0) //直線前進
+                else if(self.turnroundArr.count == 0) //Direct Forward
                 {
                     let newPostition = CGPoint(x: snackBody.position.x + snackBody.InstanceDirection.dx * InstanceSpeed, y: snackBody.position.y + snackBody.InstanceDirection.dy * InstanceSpeed)
                     snackBody.position = self.TouchTheWallDetect(input: newPostition)
                 }
                 else //TurnRound
                 {
+                    var HasMove:Bool = false
                     let NewX =  snackBody.position.x + snackBody.InstanceDirection.dx * InstanceSpeed
                     let NewY =  snackBody.position.y + snackBody.InstanceDirection.dy * InstanceSpeed
                     var index:Int = 0
                     for turnRound in self.turnroundArr
                     {
-                        if(turnRound.PassBodyID.contains(snackBody.BodyID)) //已走過
+                        if(turnRound.PassBodyID.contains(snackBody.BodyID)) //已走過,Pass到下一個turnRound
                         {
-                            let newPostition = CGPoint(x: NewX, y: NewY)
-                            snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                            index += 1
                             continue
                         }
-                        //
-                        if(abs(snackBody.InstanceDirection.dx) == 1 && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.01) //橫向超越
+                        else if(abs(snackBody.InstanceDirection.dx) == 1 && abs(snackBody.position.y - turnRound.turnRoundPosition.y) < 0.1) //橫向超越
                         {
                             let PostiveOrNegative:Bool = (snackBody.InstanceDirection.dx > 0)
                             let ChekingExceed:Bool = PostiveOrNegative ? (NewX > turnRound.turnRoundPosition.x) : (NewX < turnRound.turnRoundPosition.x)
@@ -193,6 +192,7 @@ class JDSnackScene: SKScene{
                             {
                                 let newPostition = CGPoint(x: NewX, y: NewY)
                                 snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                                HasMove = true
                                 break
                             }
                             //確定要轉彎
@@ -203,9 +203,10 @@ class JDSnackScene: SKScene{
                             let newPostition = CGPoint(x: NewX, y: NewY)
                             snackBody.position = self.TouchTheWallDetect(input: newPostition)
                             snackBody.InstanceDirection = turnRound.turnRoundDirection
+                            HasMove = true
                             break
                         }
-                        else if(abs(snackBody.InstanceDirection.dy) == 1 && abs(snackBody.position.x - turnRound.turnRoundPosition.x) < 0.01) //垂直
+                        else if(abs(snackBody.InstanceDirection.dy) == 1 && abs(snackBody.position.x - turnRound.turnRoundPosition.x) < 0.1) //垂直
                         {
                             let PostiveOrNegative:Bool = (snackBody.InstanceDirection.dy > 0)
                             let ChekingExceed:Bool = PostiveOrNegative ? (NewY > turnRound.turnRoundPosition.y) : (NewY  < turnRound.turnRoundPosition.y)
@@ -213,6 +214,7 @@ class JDSnackScene: SKScene{
                             {
                                 let newPostition = CGPoint(x: NewX, y: NewY)
                                 snackBody.position = self.TouchTheWallDetect(input: newPostition)
+                                HasMove = true
                                 break
                             }
                             self.turnroundArr[index].PassBodyID.append(snackBody.BodyID)
@@ -222,9 +224,15 @@ class JDSnackScene: SKScene{
                             let newPostition = CGPoint(x: NewX, y: NewY)
                             snackBody.position = self.TouchTheWallDetect(input: newPostition)
                             snackBody.InstanceDirection = turnRound.turnRoundDirection
+                            HasMove = true
                             break
                         }
                         index += 1
+                    }
+                    if(!HasMove) //No Turn Round
+                    {
+                        let newPostition = CGPoint(x: NewX, y: NewY)
+                        snackBody.position = self.TouchTheWallDetect(input: newPostition)
                     }
                    
                 }
@@ -237,7 +245,7 @@ class JDSnackScene: SKScene{
         var Index:Int = 0
         for turnRound in self.turnroundArr
         {
-            if(turnRound.PassBodyID.count == self.SnackBodyNodeCount)
+            if(turnRound.PassBodyID.count >= self.SnackBodyNodeCount)
             {
                 self.turnroundArr.remove(at: Index)
                 continue
