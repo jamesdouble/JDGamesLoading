@@ -16,6 +16,7 @@
 		4F5C270C1E520BC400618FA7 /* JDGamesLoadingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C270B1E520BC400618FA7 /* JDGamesLoadingUITests.swift */; };
 		4F5C271D1E520C9B00618FA7 /* JDBreaksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */; };
 		4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */; };
+		4FCDAE9E1E6D4E7900B83D2C /* JDPingPongScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */; };
 		4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		4F5C270D1E520BC400618FA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDBreaksScene.swift; sourceTree = "<group>"; };
 		4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGamesLoading.swift; sourceTree = "<group>"; };
+		4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDPingPongScene.swift; sourceTree = "<group>"; };
 		4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDSnackScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 		4F5C27191E520C8300618FA7 /* JDGamesLoading */ = {
 			isa = PBXGroup;
 			children = (
+				4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */,
 				4FF1D9581E52ADBB00EBA98E /* SnackGame */,
 				4F5C271A1E520C8F00618FA7 /* BreaksGame */,
 				4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */,
@@ -148,6 +151,14 @@
 				4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */,
 			);
 			name = BreaksGame;
+			sourceTree = "<group>";
+		};
+		4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */ = {
+			isa = PBXGroup;
+			children = (
+				4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */,
+			);
+			name = PingPongGame;
 			sourceTree = "<group>";
 		};
 		4FF1D9581E52ADBB00EBA98E /* SnackGame */ = {
@@ -292,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FCDAE9E1E6D4E7900B83D2C /* JDPingPongScene.swift in Sources */,
 				4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */,
 				4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */,
 				4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 
 extension UIApplication {
+    
     class func topViewController(controller: UIViewController? = UIApplication.shared.delegate?.window??.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
@@ -30,6 +31,7 @@ enum GamePack
 {
     case Breaks
     case Snacks
+    case PingPong
 }
 
 
@@ -82,6 +84,11 @@ class JDLoadingViewController:UIViewController
         {
             skscene = JDSnackScene(size: skviewframe.size)
         }
+        else if(GameType == .PingPong)
+        {
+            skscene = JDPingPongScene(size: skviewframe.size)
+        }
+        
         skview.presentScene(skscene)
     }
     
