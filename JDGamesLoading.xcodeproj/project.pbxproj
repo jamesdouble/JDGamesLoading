@@ -14,10 +14,10 @@
 		4F5C26F61E520BC400618FA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C26F41E520BC400618FA7 /* LaunchScreen.storyboard */; };
 		4F5C27011E520BC400618FA7 /* JDGamesLoadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C27001E520BC400618FA7 /* JDGamesLoadingTests.swift */; };
 		4F5C270C1E520BC400618FA7 /* JDGamesLoadingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C270B1E520BC400618FA7 /* JDGamesLoadingUITests.swift */; };
-		4F5C271D1E520C9B00618FA7 /* JDBreaksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */; };
-		4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */; };
-		4FCDAE9E1E6D4E7900B83D2C /* JDPingPongScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */; };
-		4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */; };
+		4F7B8D461EBD9D840030A838 /* JDPingPongScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D451EBD9D840030A838 /* JDPingPongScene.swift */; };
+		4F7B8D481EBD9D8F0030A838 /* JDSnackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D471EBD9D8E0030A838 /* JDSnackScene.swift */; };
+		4F7B8D4A1EBD9D990030A838 /* JDBreaksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D491EBD9D990030A838 /* JDBreaksScene.swift */; };
+		4F7B8D4C1EBD9DA40030A838 /* JDGamesLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +51,10 @@
 		4F5C27071E520BC400618FA7 /* JDGamesLoadingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JDGamesLoadingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C270B1E520BC400618FA7 /* JDGamesLoadingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JDGamesLoadingUITests.swift; sourceTree = "<group>"; };
 		4F5C270D1E520BC400618FA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDBreaksScene.swift; sourceTree = "<group>"; };
-		4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGamesLoading.swift; sourceTree = "<group>"; };
-		4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDPingPongScene.swift; sourceTree = "<group>"; };
-		4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDSnackScene.swift; sourceTree = "<group>"; };
+		4F7B8D451EBD9D840030A838 /* JDPingPongScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDPingPongScene.swift; path = JDGamesLoading/JDPingPongScene.swift; sourceTree = "<group>"; };
+		4F7B8D471EBD9D8E0030A838 /* JDSnackScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDSnackScene.swift; path = JDGamesLoading/JDSnackScene.swift; sourceTree = "<group>"; };
+		4F7B8D491EBD9D990030A838 /* JDBreaksScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDBreaksScene.swift; path = JDGamesLoading/JDBreaksScene.swift; sourceTree = "<group>"; };
+		4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDGamesLoading.swift; path = JDGamesLoading/JDGamesLoading.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,10 +137,10 @@
 		4F5C27191E520C8300618FA7 /* JDGamesLoading */ = {
 			isa = PBXGroup;
 			children = (
+				4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */,
 				4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */,
 				4FF1D9581E52ADBB00EBA98E /* SnackGame */,
 				4F5C271A1E520C8F00618FA7 /* BreaksGame */,
-				4F5C271F1E520D8600618FA7 /* JDGamesLoading.swift */,
 			);
 			name = JDGamesLoading;
 			sourceTree = "<group>";
@@ -148,7 +148,7 @@
 		4F5C271A1E520C8F00618FA7 /* BreaksGame */ = {
 			isa = PBXGroup;
 			children = (
-				4F5C271B1E520C9B00618FA7 /* JDBreaksScene.swift */,
+				4F7B8D491EBD9D990030A838 /* JDBreaksScene.swift */,
 			);
 			name = BreaksGame;
 			sourceTree = "<group>";
@@ -156,7 +156,7 @@
 		4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */ = {
 			isa = PBXGroup;
 			children = (
-				4FCDAE9D1E6D4E7800B83D2C /* JDPingPongScene.swift */,
+				4F7B8D451EBD9D840030A838 /* JDPingPongScene.swift */,
 			);
 			name = PingPongGame;
 			sourceTree = "<group>";
@@ -164,7 +164,7 @@
 		4FF1D9581E52ADBB00EBA98E /* SnackGame */ = {
 			isa = PBXGroup;
 			children = (
-				4FF1D9591E52AE6E00EBA98E /* JDSnackScene.swift */,
+				4F7B8D471EBD9D8E0030A838 /* JDSnackScene.swift */,
 			);
 			name = SnackGame;
 			sourceTree = "<group>";
@@ -237,6 +237,7 @@
 				TargetAttributes = {
 					4F5C26E71E520BC400618FA7 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 857SMZQ3R8;
 						ProvisioningStyle = Automatic;
 					};
 					4F5C26FB1E520BC400618FA7 = {
@@ -303,11 +304,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FCDAE9E1E6D4E7900B83D2C /* JDPingPongScene.swift in Sources */,
+				4F7B8D461EBD9D840030A838 /* JDPingPongScene.swift in Sources */,
 				4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */,
-				4F5C27201E520D8600618FA7 /* JDGamesLoading.swift in Sources */,
-				4FF1D95A1E52AE6E00EBA98E /* JDSnackScene.swift in Sources */,
-				4F5C271D1E520C9B00618FA7 /* JDBreaksScene.swift in Sources */,
+				4F7B8D481EBD9D8F0030A838 /* JDSnackScene.swift in Sources */,
+				4F7B8D4A1EBD9D990030A838 /* JDBreaksScene.swift in Sources */,
+				4F7B8D4C1EBD9DA40030A838 /* JDGamesLoading.swift in Sources */,
 				4F5C26EC1E520BC400618FA7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,7 +459,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 857SMZQ3R8;
 				INFOPLIST_FILE = JDGamesLoading/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jameskuo12345.JDGamesLoading;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -470,7 +473,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 857SMZQ3R8;
 				INFOPLIST_FILE = JDGamesLoading/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jameskuo12345.JDGamesLoading;
 				PRODUCT_NAME = "$(TARGET_NAME)";

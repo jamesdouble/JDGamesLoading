@@ -77,8 +77,15 @@ class JDBallNode:SKShapeNode
     }
 }
 
+enum JDPaddleSide
+{
+    case Own
+    case Enemy
+}
+
 class JDBreakPaddle:SKShapeNode
 {
+    var side:JDPaddleSide = .Own
     init(size:CGSize,color:UIColor,radius:CGFloat) {
         super.init()
         let rect = CGRect(origin: CGPoint.zero, size: size)
@@ -86,7 +93,7 @@ class JDBreakPaddle:SKShapeNode
         //
         self.fillColor = color
         self.name = BreaksBasicSetting.PaddleCategoryName
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.frame.size)
+        self.physicsBody = SKPhysicsBody(rectangleOf: size)
         self.physicsBody!.categoryBitMask = BreaksBasicSetting.PaddleCategory
         self.physicsBody!.isDynamic = false
         self.physicsBody!.allowsRotation = true

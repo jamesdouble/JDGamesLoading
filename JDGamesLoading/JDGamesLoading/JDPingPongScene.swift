@@ -53,6 +53,17 @@ class JDPingPongScene: SKScene
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        self.enumerateChildNodes(withName: BreaksBasicSetting.PaddleCategoryName, using: { (node, point) in
+            if let paddle:JDBreakPaddle = node as? JDBreakPaddle
+            {
+                if(paddle.side == .Enemy)
+                {
+                    paddle.position = CGPoint(x: self.ball.position.x, y: paddle.position.y)
+                }
+            }
+        })
+    }
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -79,9 +90,15 @@ class JDPingPongScene: SKScene
         //Add Paddle
         let paddlesize:CGSize = CGSize(width: paddlewidth, height: 15)
         let paddle:JDBreakPaddle = JDBreakPaddle(size: paddlesize, color: paddlecolor, radius: 5)
-        paddle.position = CGPoint(x: self.frame.width * 0.5, y: self.frame.width * 0.2)
-        
+        paddle.position = CGPoint(x: self.frame.width * 0.5, y: self.frame.width * 0.1)
+        paddle.side = .Own
         self.addChild(paddle)
+    
+        let paddle2:JDBreakPaddle = JDBreakPaddle(size: paddlesize, color: paddlecolor, radius: 5)
+        paddle2.position = CGPoint(x: self.frame.width * 0.5, y: self.frame.width * 0.8)
+        paddle2.side = .Enemy
+        self.addChild(paddle2)
+        
         //
         borderBody.categoryBitMask = BreaksBasicSetting.BorderCategory
         //
@@ -100,14 +117,14 @@ extension JDPingPongScene
         
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
-        
-        if let body = physicsWorld.body(at: touchLocation)
+        let node = self.atPoint(touchLocation)
+        if let paddle:JDBreakPaddle = node as? JDBreakPaddle
         {
-            if body.node!.name == BreaksBasicSetting.PaddleCategoryName {
+            if(paddle.side == .Own)
+            {
                 isFingerOnPaddle = true
             }
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -118,14 +135,19 @@ extension JDPingPongScene
             let touchLocation = touch!.location(in: self)
             let previousLocation = touch!.previousLocation(in: self)
             // 3
-            let paddle = childNode(withName: BreaksBasicSetting.PaddleCategoryName) as! SKShapeNode
-            // Take the current position and add the difference between the new and the previous touch locations.
-            var paddleX = paddle.position.x + (touchLocation.x - previousLocation.x)
-            // Before repositioning the paddle, limit the position so that the paddle will not go off the screen to the left or right.
-            paddleX = max(paddleX, paddle.frame.size.width/2)
-            paddleX = min(paddleX, size.width - paddle.frame.size.width/2)
-            // 6
-            paddle.position = CGPoint(x: paddleX, y: paddle.position.y)
+            self.enumerateChildNodes(withName: BreaksBasicSetting.PaddleCategoryName, using: { (node, point) in
+                if let paddle:JDBreakPaddle = node as? JDBreakPaddle
+                {
+                    if(paddle.side == .Own)
+                    {
+                        var paddleX = paddle.position.x + (touchLocation.x - previousLocation.x)
+                        paddleX = max(paddleX, paddle.frame.size.width/2)
+                        paddleX = min(paddleX, self.size.width - paddle.frame.size.width/2)
+                        // 6
+                        paddle.position = CGPoint(x: paddleX, y: paddle.position.y)
+                    }
+                }
+            })
         }
     }
     
