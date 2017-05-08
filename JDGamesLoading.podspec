@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = 'Let User play little game when they are waiting'
  
   s.description      = <<-DESC
-Now Have Three Basic game.
+Let User play little game when they are waiting , Now Have Three Basic game.
                        DESC
  
   s.homepage         = 'https://github.com/jamesdouble/JDGamesLoading'

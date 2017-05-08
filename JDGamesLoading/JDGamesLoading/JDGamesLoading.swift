@@ -35,7 +35,7 @@ enum GamePack
 }
 
 
-class JDGamesLoading
+public class JDGamesLoading
 {
     var ChoosingGame:GamePack = .Breaks
     let PrsentedViewController:JDLoadingViewController = JDLoadingViewController()
@@ -45,7 +45,7 @@ class JDGamesLoading
         ChoosingGame = game
     }
     
-    func show()
+    public func show()
     {
         PrsentedViewController.GameType = ChoosingGame
         if let VC = UIApplication.topViewController() {
