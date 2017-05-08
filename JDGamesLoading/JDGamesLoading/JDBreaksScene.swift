@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-struct JDBreaksGameConfiguration {
+public struct JDBreaksGameConfiguration {
     var paddle_color:UIColor = UIColor.white
     var ball_color:UIColor = UIColor.white
     var block_color:UIColor = UIColor.white

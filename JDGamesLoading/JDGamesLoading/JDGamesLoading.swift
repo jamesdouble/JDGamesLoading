@@ -27,7 +27,7 @@ extension UIApplication {
     }
 }
 
-enum GamePack
+public enum GamePack
 {
     case Breaks
     case Snacks
@@ -40,7 +40,7 @@ public class JDGamesLoading
     var ChoosingGame:GamePack = .Breaks
     let PrsentedViewController:JDLoadingViewController = JDLoadingViewController()
     
-    init(game:GamePack)
+    public init(game:GamePack)
     {
         ChoosingGame = game
     }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'JDGamesLoading'
-  s.version          = '1.1.1'
+  s.version          = '1.2.0'
   s.summary          = 'Let User play little game when they are waiting'
  
   s.description      = <<-DESC

@@ -9,13 +9,13 @@
 import SpriteKit
 import GameplayKit
 
-struct JDSnackGameConfiguration {
+public struct JDSnackGameConfiguration {
     var Snack_color:UIColor = UIColor.green
     var Food_color:UIColor = UIColor.white
     var Snack_Speed:CGFloat = 10.0
 }
 
-struct SnackBasicSetting {
+public struct SnackBasicSetting {
     static let SnackHeadCategoryName = "SnackHead"
     static let SnackBodyCategoryName = "SnackBody"
     static let FoodCategoryName = "Food"

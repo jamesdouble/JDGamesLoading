@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-struct JDPingPongConfiguration {
+public struct JDPingPongConfiguration {
     var paddle_color:UIColor = UIColor.white
     var ball_color:UIColor = UIColor.white
 }
