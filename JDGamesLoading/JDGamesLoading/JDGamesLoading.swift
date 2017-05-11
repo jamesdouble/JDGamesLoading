@@ -38,12 +38,36 @@ public enum GamePack
 public class JDGamesLoading:NSObject
 {
     static var PrsentedViewController:JDLoadingViewController?
-    
+    var ChoosingGame:GamePack?
     public init(game:GamePack)
     {
+        ChoosingGame = game
         JDGamesLoading.PrsentedViewController = JDLoadingViewController(gamesType: game)
         JDGamesLoading.PrsentedViewController?.modalPresentationStyle = .overCurrentContext
         JDGamesLoading.PrsentedViewController?.modalTransitionStyle = .coverVertical
+    }
+    
+    public func withConfiguration(configuration:JDGamesConfiguration)->JDGamesLoading
+    {
+        if let choosinggames = ChoosingGame
+        {
+            if let snackConfig = configuration as? JDSnackGameConfiguration,choosinggames == .Snacks
+            {
+                JDGamesLoading.PrsentedViewController = JDLoadingViewController(gamesType: choosinggames, config: snackConfig)
+            }
+            if let breakConfig = configuration as? JDBreaksGameConfiguration,choosinggames == .Snacks
+            {
+                JDGamesLoading.PrsentedViewController = JDLoadingViewController(gamesType: choosinggames, config: breakConfig)
+                
+            }
+            if let pingConfig = configuration as? JDPingPongConfiguration,choosinggames == .PingPong
+            {
+                JDGamesLoading.PrsentedViewController = JDLoadingViewController(gamesType: choosinggames, config: pingConfig)
+            }
+            JDGamesLoading.PrsentedViewController?.modalPresentationStyle = .overCurrentContext
+            JDGamesLoading.PrsentedViewController?.modalTransitionStyle = .coverVertical
+        }
+        return self
     }
     
     public func show()
@@ -75,7 +99,6 @@ public class JDGamesLoading:NSObject
     
     static func dismiss()
     {
-        print(#function)
         if let VC = UIApplication.topViewController() {
                 VC.dismiss(animated: true, completion: nil)
         }
@@ -85,15 +108,12 @@ public class JDGamesLoading:NSObject
     
     func dismiss()
     {
-        print(#function)
         if let VC = UIApplication.topViewController() {
             VC.dismiss(animated: true, completion: nil)
         }
         JDGamesLoading.PrsentedViewController?.dismiss(animated: true, completion: nil)
     }
-
-    
-    }
+}
 
 class JDLoadingViewController:UIViewController
 {
@@ -103,12 +123,21 @@ class JDLoadingViewController:UIViewController
      var skscene:SKScene!
      var GameType:GamePack = .Breaks
      var frame:CGRect!
+     var gameconfig:JDGamesConfiguration?
     
     init(gamesType:GamePack) {
         super.init(nibName: nil, bundle: nil)
         GameType = gamesType
     }
     
+    init(gamesType:GamePack,config:JDGamesConfiguration) {
+        super.init(nibName: nil, bundle: nil)
+        GameType = gamesType
+        gameconfig = config
+    }
+    
+   
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -125,17 +154,37 @@ class JDLoadingViewController:UIViewController
         let skviewframe:CGRect = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         if(GameType == .Breaks)
         {
-            skscene = JDBreaksScene(size: skviewframe.size)
+            if let breakconfig = gameconfig as? JDBreaksGameConfiguration
+            {
+                skscene = JDBreaksScene(size: skviewframe.size, configuration: breakconfig)
+            }
+            else
+            {
+                skscene = JDBreaksScene(size: skviewframe.size)
+            }
         }
         else if(GameType == .Snacks)
         {
-            skscene = JDSnackScene(size: skviewframe.size)
+            if let sncakconfig = gameconfig as? JDSnackGameConfiguration
+            {
+                skscene = JDSnackScene(size: skviewframe.size, configuration: sncakconfig)
+            }
+            else
+            {
+                skscene = JDSnackScene(size: skviewframe.size)
+            }
         }
         else if(GameType == .PingPong)
         {
-            skscene = JDPingPongScene(size: skviewframe.size)
+            if let pingconfig = gameconfig as? JDPingPongConfiguration
+            {
+                skscene = JDPingPongScene(size: skviewframe.size, configuration: pingconfig)
+            }
+            else
+            {
+                skscene = JDPingPongScene(size: skviewframe.size)
+            }
         }
-        
         skview.presentScene(skscene)
     }
     

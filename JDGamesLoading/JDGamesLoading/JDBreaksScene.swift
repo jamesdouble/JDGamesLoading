@@ -9,13 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-public struct JDBreaksGameConfiguration {
-    var paddle_color:UIColor = UIColor.white
-    var ball_color:UIColor = UIColor.white
-    var block_color:UIColor = UIColor.white
-    var RowCount:Int = 1
-    var ColumnCount:Int = 3
-}
+
 
 struct BreaksBasicSetting {
     static let BallCategoryName = "ball"

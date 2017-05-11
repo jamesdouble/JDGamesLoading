@@ -18,6 +18,7 @@
 		4F7B8D481EBD9D8F0030A838 /* JDSnackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D471EBD9D8E0030A838 /* JDSnackScene.swift */; };
 		4F7B8D4A1EBD9D990030A838 /* JDBreaksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D491EBD9D990030A838 /* JDBreaksScene.swift */; };
 		4F7B8D4C1EBD9DA40030A838 /* JDGamesLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */; };
+		4FB7D1CE1EC443AC004ACAFF /* JDGamesConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7D1CD1EC443AC004ACAFF /* JDGamesConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		4F7B8D471EBD9D8E0030A838 /* JDSnackScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDSnackScene.swift; path = JDGamesLoading/JDSnackScene.swift; sourceTree = "<group>"; };
 		4F7B8D491EBD9D990030A838 /* JDBreaksScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDBreaksScene.swift; path = JDGamesLoading/JDBreaksScene.swift; sourceTree = "<group>"; };
 		4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDGamesLoading.swift; path = JDGamesLoading/JDGamesLoading.swift; sourceTree = "<group>"; };
+		4FB7D1CD1EC443AC004ACAFF /* JDGamesConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDGamesConfiguration.swift; path = JDGamesLoading/JDGamesConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7B8D4B1EBD9DA40030A838 /* JDGamesLoading.swift */,
+				4FB7D1CD1EC443AC004ACAFF /* JDGamesConfiguration.swift */,
 				4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */,
 				4FF1D9581E52ADBB00EBA98E /* SnackGame */,
 				4F5C271A1E520C8F00618FA7 /* BreaksGame */,
@@ -304,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB7D1CE1EC443AC004ACAFF /* JDGamesConfiguration.swift in Sources */,
 				4F7B8D461EBD9D840030A838 /* JDPingPongScene.swift in Sources */,
 				4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */,
 				4F7B8D481EBD9D8F0030A838 /* JDSnackScene.swift in Sources */,
