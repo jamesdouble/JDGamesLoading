@@ -35,26 +35,63 @@ public enum GamePack
 }
 
 
-public class JDGamesLoading
+public class JDGamesLoading:NSObject
 {
-    var ChoosingGame:GamePack = .Breaks
-    let PrsentedViewController:JDLoadingViewController = JDLoadingViewController()
+    static var PrsentedViewController:JDLoadingViewController?
     
     public init(game:GamePack)
     {
-        ChoosingGame = game
+        JDGamesLoading.PrsentedViewController = JDLoadingViewController(gamesType: game)
+        JDGamesLoading.PrsentedViewController?.modalPresentationStyle = .overCurrentContext
+        JDGamesLoading.PrsentedViewController?.modalTransitionStyle = .coverVertical
     }
     
     public func show()
     {
-        PrsentedViewController.GameType = ChoosingGame
-        if let VC = UIApplication.topViewController() {
-            PrsentedViewController.modalPresentationStyle = .overCurrentContext
-            PrsentedViewController.modalTransitionStyle = .coverVertical
-            
-            VC.present(PrsentedViewController, animated: true, completion: nil)
+        if let VC = UIApplication.topViewController(),let JDVC = JDGamesLoading.PrsentedViewController
+        {
+            VC.present(JDVC, animated: true, completion: nil)
         }
     }
+    
+    public func demoPresent()
+    {
+        if let JDVC = JDGamesLoading.PrsentedViewController
+        {
+            let NAV = UINavigationController(rootViewController:  JDVC)
+            NAV.modalPresentationStyle = .overCurrentContext
+            NAV.modalTransitionStyle = .coverVertical
+            
+            //
+            let barButton = UIBarButtonItem(title: "Dismiss", style: .plain, target: self, action: #selector(self.dismiss))
+            JDVC.navigationItem.leftBarButtonItem = barButton
+            //
+            
+            if let VC = UIApplication.topViewController() {
+                VC.present(NAV, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    static func dismiss()
+    {
+        print(#function)
+        if let VC = UIApplication.topViewController() {
+                VC.dismiss(animated: true, completion: nil)
+        }
+        JDGamesLoading.PrsentedViewController?.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    func dismiss()
+    {
+        print(#function)
+        if let VC = UIApplication.topViewController() {
+            VC.dismiss(animated: true, completion: nil)
+        }
+        JDGamesLoading.PrsentedViewController?.dismiss(animated: true, completion: nil)
+    }
+
     
     }
 
@@ -67,7 +104,17 @@ class JDLoadingViewController:UIViewController
      var GameType:GamePack = .Breaks
      var frame:CGRect!
     
+    init(gamesType:GamePack) {
+        super.init(nibName: nil, bundle: nil)
+        GameType = gamesType
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         //

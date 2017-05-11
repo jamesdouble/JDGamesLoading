@@ -13,9 +13,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var jdgamesloading:JDGamesLoading?
     override func viewDidAppear(_ animated: Bool) {
-        JDGamesLoading(game: .PingPong).show()
+        
+    }
+    
+    @IBAction func ShowSnackGames(_ sender: Any) {
+        jdgamesloading = JDGamesLoading(game: .Snacks)
+        jdgamesloading?.demoPresent()
     }
    
+    @IBAction func ShowBreakGame(_ sender: Any) {
+        jdgamesloading = JDGamesLoading(game: .Breaks)
+        jdgamesloading?.demoPresent()
+    }
+    
+    @IBAction func ShowPingPong(_ sender: Any) {
+        jdgamesloading = JDGamesLoading(game: .PingPong)
+        jdgamesloading?.demoPresent()
+    }
+    
 }
 
