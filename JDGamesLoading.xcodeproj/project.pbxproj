@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F08E6F31ECCC06D00131F26 /* JDPuzzleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08E6F21ECCC06D00131F26 /* JDPuzzleScene.swift */; };
 		4F5C26EC1E520BC400618FA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C26EB1E520BC400618FA7 /* AppDelegate.swift */; };
 		4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C26ED1E520BC400618FA7 /* ViewController.swift */; };
 		4F5C26F11E520BC400618FA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C26EF1E520BC400618FA7 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F08E6F21ECCC06D00131F26 /* JDPuzzleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JDPuzzleScene.swift; path = JDGamesLoading/JDPuzzleScene.swift; sourceTree = "<group>"; };
 		4F5C26E81E520BC400618FA7 /* JDGamesLoading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDGamesLoading.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C26EB1E520BC400618FA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F5C26ED1E520BC400618FA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F08E6F11ECCC03700131F26 /* PuzzleGame */ = {
+			isa = PBXGroup;
+			children = (
+				4F08E6F21ECCC06D00131F26 /* JDPuzzleScene.swift */,
+			);
+			name = PuzzleGame;
+			sourceTree = "<group>";
+		};
 		4F5C26DF1E520BC400618FA7 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +153,7 @@
 				4FB7D1CD1EC443AC004ACAFF /* JDGamesConfiguration.swift */,
 				4FCDAE9C1E6D4E4200B83D2C /* PingPongGame */,
 				4FF1D9581E52ADBB00EBA98E /* SnackGame */,
+				4F08E6F11ECCC03700131F26 /* PuzzleGame */,
 				4F5C271A1E520C8F00618FA7 /* BreaksGame */,
 			);
 			name = JDGamesLoading;
@@ -311,6 +322,7 @@
 				4F7B8D461EBD9D840030A838 /* JDPingPongScene.swift in Sources */,
 				4F5C26EE1E520BC400618FA7 /* ViewController.swift in Sources */,
 				4F7B8D481EBD9D8F0030A838 /* JDSnackScene.swift in Sources */,
+				4F08E6F31ECCC06D00131F26 /* JDPuzzleScene.swift in Sources */,
 				4F7B8D4A1EBD9D990030A838 /* JDBreaksScene.swift in Sources */,
 				4F7B8D4C1EBD9DA40030A838 /* JDGamesLoading.swift in Sources */,
 				4F5C26EC1E520BC400618FA7 /* AppDelegate.swift in Sources */,

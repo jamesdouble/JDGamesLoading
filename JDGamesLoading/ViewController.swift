@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         
     }
     
+    
     @IBAction func ShowSnackGames(_ sender: Any) {
         //let snackconfig:JDSnackGameConfiguration = JDSnackGameConfiguration(snackcolor: UIColor.blue, foodcolor: UIColor.brown, snackspeed: 50)
         jdgamesloading = JDGamesLoading(game: .Snacks)
@@ -34,5 +35,9 @@ class ViewController: UIViewController {
         jdgamesloading?.demoPresent()
     }
     
+    @IBAction func ShowPuzzle(_ sender: Any) {
+        jdgamesloading = JDGamesLoading(game: .Puzzle)
+        jdgamesloading?.demoPresent()
+    }
+    
 }
-

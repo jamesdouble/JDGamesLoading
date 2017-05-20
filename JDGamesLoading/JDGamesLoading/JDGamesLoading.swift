@@ -32,6 +32,7 @@ public enum GamePack
     case Breaks
     case Snacks
     case PingPong
+    case Puzzle
 }
 
 
@@ -185,6 +186,10 @@ class JDLoadingViewController:UIViewController
                 skscene = JDPingPongScene(size: skviewframe.size)
             }
         }
+        else if(GameType == .Puzzle)
+        {
+            skscene = JDPuzzleScene(size: skviewframe.size)
+        }
         skview.presentScene(skscene)
     }
     
@@ -200,6 +205,7 @@ class JDLoadingViewController:UIViewController
         skview.backgroundColor = UIColor.clear
         skview.layer.cornerRadius =  0.25 * frame.width
         skview.alpha = 0.8
+        skview.layer.masksToBounds = true
         
         let bg = UIView(frame: skviewframe)
         bg.backgroundColor = UIColor.black

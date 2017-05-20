@@ -23,39 +23,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oog-fo-NTf">
-                                <rect key="frame" x="74.5" y="66.5" width="225" height="30"/>
+                                <rect key="frame" x="74.5" y="33.5" width="225" height="30"/>
                                 <state key="normal" title="SnackGame"/>
                                 <connections>
                                     <action selector="ShowSnackGames:" destination="BYZ-38-t0r" eventType="touchUpInside" id="v9K-HO-NTk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-GU-l4C">
-                                <rect key="frame" x="74.5" y="116.5" width="225" height="30"/>
+                                <rect key="frame" x="74.5" y="83.5" width="225" height="30"/>
                                 <state key="normal" title="BreakGame"/>
                                 <connections>
                                     <action selector="ShowBreakGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="prp-kT-Zhq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRO-92-QdX">
-                                <rect key="frame" x="74.5" y="166.5" width="225" height="30"/>
+                                <rect key="frame" x="74.5" y="133.5" width="225" height="30"/>
                                 <state key="normal" title="PingPong"/>
                                 <connections>
                                     <action selector="ShowPingPong:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cVG-5e-xJC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UJd-xz-0Bj">
+                                <rect key="frame" x="74.5" y="183.5" width="225" height="30"/>
+                                <state key="normal" title="Puzzle"/>
+                                <connections>
+                                    <action selector="ShowPuzzle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="clM-9q-CSv"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Oog-fo-NTf" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.6" id="2JL-Jc-kRy"/>
+                            <constraint firstItem="UJd-xz-0Bj" firstAttribute="height" secondItem="XRO-92-QdX" secondAttribute="height" id="8CA-Nd-6zR"/>
                             <constraint firstItem="lzg-GU-l4C" firstAttribute="height" secondItem="Oog-fo-NTf" secondAttribute="height" id="C9j-dW-u2L"/>
                             <constraint firstItem="lzg-GU-l4C" firstAttribute="width" secondItem="Oog-fo-NTf" secondAttribute="width" id="CeR-VX-bxq"/>
                             <constraint firstItem="XRO-92-QdX" firstAttribute="height" secondItem="lzg-GU-l4C" secondAttribute="height" id="HB0-5f-uhv"/>
                             <constraint firstItem="lzg-GU-l4C" firstAttribute="top" secondItem="Oog-fo-NTf" secondAttribute="bottom" constant="20" id="QUE-6h-AsM"/>
                             <constraint firstItem="Oog-fo-NTf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="T5Q-gd-HS0"/>
+                            <constraint firstItem="UJd-xz-0Bj" firstAttribute="width" secondItem="XRO-92-QdX" secondAttribute="width" id="ZnO-XX-z9R"/>
                             <constraint firstItem="XRO-92-QdX" firstAttribute="width" secondItem="lzg-GU-l4C" secondAttribute="width" id="abm-cg-XBK"/>
+                            <constraint firstItem="UJd-xz-0Bj" firstAttribute="top" secondItem="XRO-92-QdX" secondAttribute="bottom" constant="20" id="bpT-ab-0nz"/>
                             <constraint firstItem="XRO-92-QdX" firstAttribute="top" secondItem="lzg-GU-l4C" secondAttribute="bottom" constant="20" id="d1C-Mr-GHY"/>
                             <constraint firstItem="XRO-92-QdX" firstAttribute="centerX" secondItem="lzg-GU-l4C" secondAttribute="centerX" id="hvZ-4r-dw3"/>
-                            <constraint firstItem="Oog-fo-NTf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="0.1" id="kUo-38-7NT"/>
+                            <constraint firstItem="Oog-fo-NTf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="0.05" id="kUo-38-7NT"/>
+                            <constraint firstItem="UJd-xz-0Bj" firstAttribute="centerX" secondItem="XRO-92-QdX" secondAttribute="centerX" id="qM5-9I-HYd"/>
                             <constraint firstItem="lzg-GU-l4C" firstAttribute="centerX" secondItem="Oog-fo-NTf" secondAttribute="centerX" id="uY4-fz-QRM"/>
                         </constraints>
                     </view>
