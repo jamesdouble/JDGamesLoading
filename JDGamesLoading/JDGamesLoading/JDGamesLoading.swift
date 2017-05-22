@@ -98,7 +98,7 @@ public class JDGamesLoading:NSObject
         }
     }
     
-    static func dismiss()
+    public static func dismiss()
     {
         if let VC = UIApplication.topViewController() {
                 VC.dismiss(animated: true, completion: nil)
@@ -107,7 +107,7 @@ public class JDGamesLoading:NSObject
         
     }
     
-    func dismiss()
+    public func dismiss()
     {
         if let VC = UIApplication.topViewController() {
             VC.dismiss(animated: true, completion: nil)
