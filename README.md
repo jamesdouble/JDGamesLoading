@@ -49,9 +49,12 @@ For Dismiss:
 * **.Breaks**:
 <img src="/../master/Readme_img/BreakGameDemo.gif" width="40%">
 
+* **.Puzzle**:
+<img src="/../master/Readme_img/JDPuzzleDemo.gif" width="40%">
+
 
 ### Game Configuration 
-Because there are 3 game now, 
+Because there are more game now, 
 So I change the way to set the game configuration.
 
 **Call .withConfiguration(configuration:) Brfore .show()**
