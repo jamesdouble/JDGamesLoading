@@ -190,6 +190,8 @@ class JDLoadingViewController:UIViewController
         {
             skscene = JDPuzzleScene(size: skviewframe.size)
         }
+    
+        skscene.backgroundColor = UIColor.clear
         skview.presentScene(skscene)
     }
     
@@ -205,11 +207,12 @@ class JDLoadingViewController:UIViewController
         skview.backgroundColor = UIColor.clear
         skview.layer.cornerRadius =  0.25 * frame.width
         skview.alpha = 0.8
+        skview.allowsTransparency = true
         skview.layer.masksToBounds = true
         
         let bg = UIView(frame: skviewframe)
         bg.backgroundColor = UIColor.black
-        bg.alpha = 0.5
+        bg.alpha = 0.3
         bg.layer.cornerRadius = 0.25 * frame.width
         
         ContainerView.addSubview(bg)
@@ -217,6 +220,7 @@ class JDLoadingViewController:UIViewController
         
         indicator.frame = CGRect(x: (frame.width - 30) * 0.5, y: (frame.height - 30) * 0.5, width: 30, height: 30)
         indicator.startAnimating()
+        indicator.isUserInteractionEnabled = false
         ContainerView.addSubview(indicator)
     }
 

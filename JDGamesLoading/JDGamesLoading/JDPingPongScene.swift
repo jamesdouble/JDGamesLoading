@@ -68,8 +68,7 @@ class JDPingPongScene: SKScene
         windowscale = (self.frame.width / defaultwindowwidth)
         ballwidth = d_ballwidth * windowscale
         paddlewidth = d_paddlewidth * windowscale
-        self.backgroundColor = UIColor.clear
-        
+
         //Set Border
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         borderBody.friction = 0
